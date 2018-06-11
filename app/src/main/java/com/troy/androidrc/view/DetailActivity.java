@@ -121,6 +121,8 @@ public class DetailActivity extends AppCompatActivity implements LifecycleOwner{
                         mTvOrder.setText(builder.toString());
                     }
                 }
+
+                testRxjava();
             }
         });
 
@@ -221,41 +223,46 @@ public class DetailActivity extends AppCompatActivity implements LifecycleOwner{
     @Override
     protected void onResume() {
         super.onResume();
+    }
 
-        Maybe<Order> orderMaybe = queryOrderV3();
-        orderMaybe.subscribeOn(Schedulers.io())
-                .observeOn(Schedulers.newThread())
-                .subscribe(new Consumer<Order>() {
-                    @Override
-                    public void accept(@NonNull Order order) throws Exception {
+    private void testRxjava(){
 
-                    }
-                });
+        try {
+            Maybe<Order> orderMaybe = queryOrderV3();
+            orderMaybe.subscribeOn(Schedulers.io())
+                    .observeOn(Schedulers.newThread())
+                    .subscribe(new Consumer<Order>() {
+                        @Override
+                        public void accept(@NonNull Order order) throws Exception {
 
-        Flowable<Order> orderFlowable =  queryOrderV2();
-        orderFlowable.subscribeOn(Schedulers.io())
-                .observeOn(Schedulers.newThread())
-                .subscribe(new Subscriber<Order>() {
-                    @Override
-                    public void onSubscribe(Subscription s) {
+                        }
+                    });
 
-                    }
+            Flowable<Order> orderFlowable =  queryOrderV2();
+            orderFlowable.subscribeOn(Schedulers.io())
+                    .observeOn(Schedulers.newThread())
+                    .subscribe(new Subscriber<Order>() {
+                        @Override
+                        public void onSubscribe(Subscription s) {
 
-                    @Override
-                    public void onNext(Order order) {
+                        }
 
-                    }
+                        @Override
+                        public void onNext(Order order) {
 
-                    @Override
-                    public void onError(Throwable t) {
+                        }
 
-                    }
+                        @Override
+                        public void onError(Throwable t) {
 
-                    @Override
-                    public void onComplete() {
+                        }
 
-                    }
-                });
+                        @Override
+                        public void onComplete() {
+
+                        }
+                    });
+        } catch (Exception e){}
 
     }
 
